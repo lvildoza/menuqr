@@ -18,10 +18,7 @@ jobs:
       run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
     - name: Build the MenuQR Docker image
-      run: docker run --rm docker.io/library/menuqr
-      
-    - name: Build the MenuQR Docker image
       run: docker build -t menuqr .
       
     - name: Push the MenuQR Docker image
-      run: docker push leovildoza/menuqr:latest
+      run: docker push leovildoza/menuqr/menuqr:latest
