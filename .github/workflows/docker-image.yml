@@ -7,21 +7,16 @@ on:
     branches: [ "main" ]
 
 jobs:
-
-    build:
-
+    deploy:
         runs-on: ubuntu-latest
-
         steps:
+        - name: build and push to docker
         - uses: actions/checkout@v4
         - name: Login Docker
-          env:
-            DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-            DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-
-        - name: Build the Docker image
-          run: docker build -t menuqr:latest .
-
-        - name: Push the Docker image
-          run: docker push leovildoza/menuqr:latest
+          with:
+            username: ${{ secrets.DOCKER_USERNAME }}
+            password: ${{ secrets.DOCKER_PASSWORD }}
+            repository: ${{ github.repository }}
+            tag_with_ref: true
+            tag_with_sha: true
+            tags: ${{ github.sha }}
