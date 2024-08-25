@@ -21,4 +21,4 @@ jobs:
       run: docker build -t menuqr .
       
     - name: Push the MenuQR Docker image
-      run: docker push lvildoza/manuqr/leovildoza/menuqr:latest
+      run: docker push leovildoza/menuqr
