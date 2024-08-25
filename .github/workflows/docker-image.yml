@@ -10,17 +10,14 @@ jobs:
   create-docker-image:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repostory
-        uses: actions/checkout@v4
-      
-      - name: Login to GitHub Container Registry
-        uses: actions/login-action@v1
-        with:
-          registry: menuqr.io
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+    - uses: actions/checkout@v4  
+    - name: Login to GitHub Container Registry
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSOWORD
 
-      - name: Build the MenuQR Docker image
-        run:
-          docker build . --tag menuqr.io/leovildoza/menuqr:latest
-          docker push menuqr.io/leovildoza/menuqr:latest
+    - name: Build the MenuQR Docker image
+      run:
+        docker build . --tag menuqr.io/leovildoza/menuqr:latest
+        docker push menuqr.io/leovildoza/menuqr:latest
