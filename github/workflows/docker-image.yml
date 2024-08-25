@@ -1,0 +1,30 @@
+name: Build and Deploy BackendApp Docker Image
+
+on:
+  push:
+    paths:
+      - "backend/**"
+    branches: ["main"]
+    
+  pull_request:
+    paths:
+      - "backend/**"
+    branches: ["main"]
+
+jobs:
+  create-docker-image:
+    run-on: ubuntu-latest
+    steps:
+      - name: Checkout repostory
+
+      - name: Login to GitHub Container Registry
+        uses: actions/login-action@v1
+        with:
+          registry: menuqr.io
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build the MenuQR Docker image
+        run:
+          docker build . --tag menuqr.io/leovildoza/menuqr:latest
+          docker push menuqr.io/leovildoza/menuqr:latest
