@@ -23,7 +23,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build Docker image
-      run: docker build -t leovildoza/menuqr:latest .
+      run: docker build -t leovildoza/menuqr-fpp:latest .
 
     - name: Push Docker image
-      run: docker push leovildoza/menuqr:latest
+      run: docker push leovildoza/menuqr-fpp:latest
