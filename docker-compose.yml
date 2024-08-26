@@ -1,6 +1,33 @@
 version: "3.7"
 services:
-  menuqr:
+
+  db-prod:
+    container_name: postgres_menuqr
+    image: postgres:alpine
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+
+  pgadmin:
+    container_name: pgadmin_menuqr
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+    ports:
+      - 5051:80
+    depends_on:
+      - db-prod
+
+  app-prod:
+    container_name: App-FastAPI-MenuQR
     build: .
     ports:
       - 8000:8000
+    depends_on:
+      - db-prod
+    restart: always
